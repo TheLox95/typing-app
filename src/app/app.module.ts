@@ -24,7 +24,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
     BrowserAnimationsModule,
     HotkeyModule.forRoot()
   ],
-  providers: [ParagraphService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
+  providers: [ParagraphService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}],
   bootstrap: [AppComponent],
   entryComponents: [ParagraphComponent]
 })
