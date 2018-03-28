@@ -1,0 +1,15 @@
+.character{
+  display: inline
+}
+
+.wait-for-type{
+  font-weight: bold;
+}
+
+.typed-wrong{
+  color: red;
+}
+
+.typed-correct{
+  color: green;
+}

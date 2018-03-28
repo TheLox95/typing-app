@@ -1,3 +1,9 @@
-<p>
-  {{data.body}}
-</p>
+<div>
+  <p class="character" [ngClass] ="{'wait-for-type': character.typed === 'NOT', 'typed-wrong': character.typed === 'WRONG', 'typed-correct': character.typed === 'CORRECT'}" *ngFor="let character of text">{{character.body}}</p>
+</div>
+<div>
+  <p class="typed-wrong">Wrong count: {{wrongAmmo}}</p>
+</div>
+<div>
+  <p>Time so far: {{timeTyping | date:'m:s'}}</p>
+</div>
