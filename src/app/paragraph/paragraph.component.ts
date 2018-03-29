@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatStepper } from '@angular/material';
 import { Paragraph } from '../paragraph';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { Character } from '../character';
+import { Timmer } from './timmer';
 
 @Component({
   selector: 'app-paragraph',
@@ -10,11 +11,12 @@ import { Character } from '../character';
   styleUrls: ['./paragraph.component.css']
 })
 export class ParagraphComponent implements OnInit {
-  text: Character[];
+  timmer  = new Timmer();
+  characters: Character[];
   wrongAmmo = 0;
-  timeTyping = new Date(null);
   timeIsRunning = false;
-  private characterToBeTyped: number;
+  @ViewChild(MatStepper ) stepper: MatStepper ;
+  private characterAmmoToBeTyped = 0;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Paragraph,
@@ -23,45 +25,28 @@ export class ParagraphComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.data.body = this.data.body.split('')
-    .map(character => {
-      if (character === '\n') {
-        return '↵';
-      } else if (character === ' ') {
-        return '␣';
-      } else {
-        return character;
-      }
-    }).join('');
-    this.text = this.data.body.split('').map<Character>(character => {
-      return {body: character, typed: 'NOT'};
-    });
-    console.log(this.text);
+    const preparedText = this._prepareText(this.data.body);
+    this.characters = this._textToCharacters(preparedText);
     this._bindEvents();
-    this.characterToBeTyped = 0;
-    this.timeTyping.setSeconds(0);
-
-    this.dialogRef.disableClose = true;
-    this.dialogRef.keydownEvents().subscribe((e: KeyboardEvent) => {
-      if (e.keyCode === 27) {
-        const sure = confirm('Do you waNT TO EXIT?');
-        if (sure === true) {
-          this.dialogRef.close();
-        }
-      }
-    });
+    this._configureDialog(this.dialogRef);
   }
 
   private onKeyPress = (character: string): boolean => {
-    const currentCharacter = this.text[this.characterToBeTyped];
-    if (this.characterToBeTyped === 0 && this.timeIsRunning === false) {
+    const currentCharacter = this.characters[this.characterAmmoToBeTyped];
+    if (this._isFirstCharacterTyped(this.characterAmmoToBeTyped, this.timeIsRunning)) {
       this._startTimmer();
     }
     if (currentCharacter.body === character) {
       console.log(`${character} typed`);
       currentCharacter.typed = 'CORRECT';
-      this.characterToBeTyped++;
-      console.log(`current ::${this.text[this.characterToBeTyped].body}::`);
+      if (this._isLastCharacter(this.characters.length, this.characterAmmoToBeTyped)) {
+        this.timmer.stop();
+        console.log('completed');
+        this.stepper.next();
+        return;
+      }
+      this.characterAmmoToBeTyped++;
+      console.log(`current ::${this.characters[this.characterAmmoToBeTyped].body}::`);
     } else {
       console.log(`wrong character`);
       currentCharacter.typed = 'WRONG';
@@ -72,18 +57,7 @@ export class ParagraphComponent implements OnInit {
 
   private _startTimmer() {
     this.timeIsRunning = true;
-    let minutes = 0;
-    setInterval(() => {
-      console.log(this.timeTyping);
-      let seconds = Number(this.timeTyping.toISOString().substr(17, 2));
-      seconds++;
-      if (seconds === 60) {
-        minutes++;
-        seconds = 0;
-      }
-      this.timeTyping = new Date(null);
-      this.timeTyping.setMinutes(minutes, seconds);
-    }, 1000);
+    this.timmer.start();
   }
 
   private _bindEvents() {
@@ -96,5 +70,44 @@ export class ParagraphComponent implements OnInit {
         this._hotkeysService.add(new Hotkey(character, () => this.onKeyPress(character)));
       }
     }
+  }
+
+  private _prepareText(text: string) {
+    return text.split('')
+    .map(character => {
+      if (character === '\n') {
+        return '↵';
+      } else if (character === ' ') {
+        return '␣';
+      } else {
+        return character;
+      }
+    }).join('');
+  }
+
+  private _textToCharacters(text: string) {
+    return text.split('').map<Character>(character => {
+      return {body: character, typed: 'NOT'};
+    });
+  }
+
+  private _configureDialog(dialog: MatDialogRef<ParagraphComponent>) {
+    dialog.disableClose = true;
+    dialog.keydownEvents().subscribe((e: KeyboardEvent) => {
+      if (e.keyCode === 27) {
+        const sure = confirm('Do you waNT TO EXIT?');
+        if (sure === true) {
+          dialog.close();
+        }
+      }
+    });
+  }
+
+  private _isFirstCharacterTyped(characterIndex: number, isTimeRunning: boolean) {
+    return this.characterAmmoToBeTyped === 0 && this.timeIsRunning === false;
+  }
+
+  private _isLastCharacter(charactersLength, charactersAmmoTyped) {
+    return charactersLength === charactersAmmoTyped + 1;
   }
 }

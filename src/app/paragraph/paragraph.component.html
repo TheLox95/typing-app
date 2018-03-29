@@ -1,22 +1,36 @@
-<div>
-  <div
-  class="character"
-    [ngClass]="{
-      'inline': character.body !== '↵',
-      'block': character.body === '↵',
-      'wait-for-type': character.typed === 'NOT',
-      'typed-wrong': character.typed === 'WRONG',
-      'typed-correct': character.typed === 'CORRECT'
-    }"
-    *ngFor="let character of text">
-  <ng-container *ngIf="character.body === '↵'; then returnCarriage; else normalCharacter"></ng-container>
-  <ng-template #returnCarriage>↵</ng-template>
-  <ng-template #normalCharacter>{{character.body}}</ng-template>
-</div>
-</div>
-<div>
-  <p class="typed-wrong">Wrong count: {{wrongAmmo}}</p>
-</div>
-<div>
-  <p>Time so far: {{timeTyping | date:'m:s'}}</p>
-</div>
+<mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
+  <mat-step>
+    <form>
+      <ng-template matStepLabel>Fill out your name</ng-template>
+      <div>
+        <div class="character" [ngClass]="{
+                    'inline': character.body !== '↵',
+                    'block': character.body === '↵',
+                    'wait-for-type': character.typed === 'NOT',
+                    'typed-wrong': character.typed === 'WRONG',
+                    'typed-correct': character.typed === 'CORRECT'
+                  }" *ngFor="let character of characters">
+          <ng-container *ngIf="character.body === '↵'; then returnCarriage; else normalCharacter"></ng-container>
+          <ng-template #returnCarriage>↵</ng-template>
+          <ng-template #normalCharacter>{{character.body}}</ng-template>
+        </div>
+      </div>
+      <div>
+        <p class="typed-wrong">Wrong count: {{wrongAmmo}}</p>
+      </div>
+      <div>
+        <p>Time so far: {{timmer.currentTime | date:'m:s'}}</p>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <form>
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <p>Hola</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
