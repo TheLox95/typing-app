@@ -1,5 +1,15 @@
-.character{
-  display: inline
+.block{
+  display:inline;
+}
+
+.block:after {
+  content:"\a";
+  white-space: pre;
+}
+
+.inline{
+  display: inline-block;
+
 }
 
 .wait-for-type{

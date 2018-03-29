@@ -23,9 +23,20 @@ export class ParagraphComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.data.body = this.data.body.split('')
+    .map(character => {
+      if (character === '\n') {
+        return '↵';
+      } else if (character === ' ') {
+        return '␣';
+      } else {
+        return character;
+      }
+    }).join('');
     this.text = this.data.body.split('').map<Character>(character => {
       return {body: character, typed: 'NOT'};
     });
+    console.log(this.text);
     this._bindEvents();
     this.characterToBeTyped = 0;
     this.timeTyping.setSeconds(0);
@@ -67,9 +78,9 @@ export class ParagraphComponent implements OnInit {
 
   private _bindEvents() {
     for (const character of this.data.body) {
-      if (character === ' ') {
+      if (character === '␣') {
         this._hotkeysService.add(new Hotkey('space', () => this.onKeyPress(character)));
-      } else if (character === '\n') {
+      } else if (character === '↵') {
         this._hotkeysService.add(new Hotkey('enter', () => this.onKeyPress(character)));
       } else {
         this._hotkeysService.add(new Hotkey(character, () => this.onKeyPress(character)));

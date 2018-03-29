@@ -1,5 +1,18 @@
 <div>
-  <p class="character" [ngClass] ="{'wait-for-type': character.typed === 'NOT', 'typed-wrong': character.typed === 'WRONG', 'typed-correct': character.typed === 'CORRECT'}" *ngFor="let character of text">{{character.body}}</p>
+  <div
+  class="character"
+    [ngClass]="{
+      'inline': character.body !== '↵',
+      'block': character.body === '↵',
+      'wait-for-type': character.typed === 'NOT',
+      'typed-wrong': character.typed === 'WRONG',
+      'typed-correct': character.typed === 'CORRECT'
+    }"
+    *ngFor="let character of text">
+  <ng-container *ngIf="character.body === '↵'; then returnCarriage; else normalCharacter"></ng-container>
+  <ng-template #returnCarriage>↵</ng-template>
+  <ng-template #normalCharacter>{{character.body}}</ng-template>
+</div>
 </div>
 <div>
   <p class="typed-wrong">Wrong count: {{wrongAmmo}}</p>
