@@ -40,6 +40,16 @@ export class ParagraphComponent implements OnInit {
     this._bindEvents();
     this.characterToBeTyped = 0;
     this.timeTyping.setSeconds(0);
+
+    this.dialogRef.disableClose = true;
+    this.dialogRef.keydownEvents().subscribe((e: KeyboardEvent) => {
+      if (e.keyCode === 27) {
+        const sure = confirm('Do you waNT TO EXIT?');
+        if (sure === true) {
+          this.dialogRef.close();
+        }
+      }
+    });
   }
 
   private onKeyPress = (character: string): boolean => {
