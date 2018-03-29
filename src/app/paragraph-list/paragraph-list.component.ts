@@ -20,7 +20,8 @@ export class ParagraphListComponent implements OnInit {
 
   openDialog(index: number): void {
     const dialogRef = this.dialog.open(ParagraphComponent, {
-      width: '250px',
+      width: '700px',
+      height: '600px',
       data: this.paragraphs[index]
     });
   }
