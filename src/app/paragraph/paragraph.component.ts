@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatStepper } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Paragraph } from '../paragraph';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { Character } from '../character';
@@ -15,13 +15,13 @@ export class ParagraphComponent implements OnInit {
   characters: Character[];
   wrongAmmo = 0;
   timeIsRunning = false;
-  @ViewChild(MatStepper ) stepper: MatStepper ;
+  isFinished = false;
   private characterAmmoToBeTyped = 0;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Paragraph,
     public dialogRef: MatDialogRef<ParagraphComponent>,
-    private _hotkeysService: HotkeysService
+    private _hotkeysService: HotkeysService,
   ) {}
 
   ngOnInit() {
@@ -29,6 +29,10 @@ export class ParagraphComponent implements OnInit {
     this.characters = this._textToCharacters(preparedText);
     this._bindEvents();
     this._configureDialog(this.dialogRef);
+  }
+
+  exit() {
+    this.dialogRef.close();
   }
 
   private onKeyPress = (character: string): boolean => {
@@ -41,8 +45,8 @@ export class ParagraphComponent implements OnInit {
       currentCharacter.typed = 'CORRECT';
       if (this._isLastCharacter(this.characters.length, this.characterAmmoToBeTyped)) {
         this.timmer.stop();
+        this.isFinished = true;
         console.log('completed');
-        this.stepper.next();
         return;
       }
       this.characterAmmoToBeTyped++;

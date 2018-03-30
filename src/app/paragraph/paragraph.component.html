@@ -1,36 +1,33 @@
-<mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
-  <mat-step>
-    <form>
-      <ng-template matStepLabel>Fill out your name</ng-template>
-      <div>
-        <div class="character" [ngClass]="{
-                    'inline': character.body !== '↵',
-                    'block': character.body === '↵',
-                    'wait-for-type': character.typed === 'NOT',
-                    'typed-wrong': character.typed === 'WRONG',
-                    'typed-correct': character.typed === 'CORRECT'
-                  }" *ngFor="let character of characters">
-          <ng-container *ngIf="character.body === '↵'; then returnCarriage; else normalCharacter"></ng-container>
-          <ng-template #returnCarriage>↵</ng-template>
-          <ng-template #normalCharacter>{{character.body}}</ng-template>
-        </div>
-      </div>
-      <div>
-        <p class="typed-wrong">Wrong count: {{wrongAmmo}}</p>
-      </div>
-      <div>
-        <p>Time so far: {{timmer.currentTime | date:'m:s'}}</p>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <form>
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <p>Hola</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-</mat-horizontal-stepper>
+<ng-template [ngIf]="!isFinished">
+  <div>
+    <div class="character" [ngClass]="{
+                'inline': character.body !== '↵',
+                'block': character.body === '↵',
+                'wait-for-type': character.typed === 'NOT',
+                'typed-wrong': character.typed === 'WRONG',
+                'typed-correct': character.typed === 'CORRECT'
+              }" *ngFor="let character of characters">
+      <ng-container *ngIf="character.body === '↵'; then returnCarriage; else normalCharacter"></ng-container>
+      <ng-template #returnCarriage>↵</ng-template>
+      <ng-template #normalCharacter>{{character.body}}</ng-template>
+    </div>
+  </div>
+  <div>
+    <p class="typed-wrong">Wrong count: {{wrongAmmo}}</p>
+  </div>
+  <div>
+    <p>Time so far: {{timmer.currentTime | date:'m:s'}}</p>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="isFinished">
+  <h1>Results</h1>
+  <h2>You have just finished this exercise!</h2>
+  <p>Your time was: {{timmer.currentTime | date:'m:s'}} seconds</p>
+  <p *ngIf="wrongAmmo === 0">Perfect! Your had 0 errors.</p>
+  <p *ngIf="wrongAmmo <= 3 && wrongAmmo >= 1">Your had just {{wrongAmmo}} errors, almost perfect!</p>
+  <p *ngIf="wrongAmmo >= 3">Your had {{wrongAmmo}} errors, keep practicing!</p>
+  <div>
+    <button mat-button (click)="exit()">Exit</button>
+  </div>
+</ng-template>
