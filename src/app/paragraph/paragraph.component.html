@@ -1,4 +1,4 @@
-<ng-template [ngIf]="!isFinished">
+<div *ngIf="!isFinished" [@slideInOut]>
   <div>
     <div class="character" [ngClass]="{
                 'inline': character.body !== '↵',
@@ -18,9 +18,9 @@
   <div>
     <p>Time so far: {{timmer.currentTime | date:'m:s'}}</p>
   </div>
-</ng-template>
+</div>
 
-<ng-template [ngIf]="isFinished">
+<div *ngIf="isFinished">
   <h1>Results</h1>
   <h2>You have just finished this exercise!</h2>
   <p>Your time was: {{timmer.currentTime | date:'m:s'}} seconds</p>
@@ -30,4 +30,4 @@
   <div>
     <button mat-button (click)="exit()">Exit</button>
   </div>
-</ng-template>
+</div>

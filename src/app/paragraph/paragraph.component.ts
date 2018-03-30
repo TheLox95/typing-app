@@ -4,11 +4,19 @@ import { Paragraph } from '../paragraph';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { Character } from '../character';
 import { Timmer } from './timmer';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-paragraph',
   templateUrl: './paragraph.component.html',
-  styleUrls: ['./paragraph.component.css']
+  styleUrls: ['./paragraph.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':leave', [
+        animate('300ms ease-out', style({transform: 'translate3d(-100%, 0, 0)', visibility: 'hidden'}))
+      ])
+    ])
+  ]
 })
 export class ParagraphComponent implements OnInit {
   timmer  = new Timmer();
