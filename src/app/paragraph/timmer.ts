@@ -1,6 +1,6 @@
 export class Timmer {
   private _timeSoFar = new Date(null);
-  private _interval: NodeJS.Timer;
+  private _interval: number;
 
   get currentTime() {
     return this._timeSoFar;
@@ -8,7 +8,7 @@ export class Timmer {
 
   start() {
     let minutes = 0;
-    this._interval = setInterval(() => {
+    this._interval = window.setInterval(() => {
       let seconds = Number(this._timeSoFar.toISOString().substr(17, 2));
       seconds++;
       if (seconds === 60) {
