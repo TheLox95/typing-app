@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { ParagraphListComponent } from './paragraph-list/paragraph-list.component';
 import { ParagraphComponent } from './paragraph/paragraph.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatStepperModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +22,6 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     MatDialogModule,
     MatStepperModule,
-    FormsModule,
     BrowserAnimationsModule,
     HotkeyModule.forRoot()
   ],
