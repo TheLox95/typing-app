@@ -1,0 +1,5 @@
+Todos:
+  ☐ There is an error when a letter that is not present on the text is typed,
+  not triggering event and it is not marked as correct or incorrect.
+  This is no problem if all the characters of the alphabet are present on the text
+  but it is not will male the app to not work
