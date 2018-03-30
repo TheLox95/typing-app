@@ -1,6 +1,6 @@
 <div *ngIf="!isFinished" [@slideInOut]>
-  <div>
-    <div class="character" [ngClass]="{
+  <div class="paragraph" >
+    <div [ngClass]="{
                 'inline': character.body !== '↵',
                 'block': character.body === '↵',
                 'wait-for-type': character.typed === 'NOT',
@@ -13,10 +13,10 @@
     </div>
   </div>
   <div>
-    <p class="typed-wrong">Wrong count: {{wrongAmmo}}</p>
+    <p class="typed-wrong mat-subheading-2">Wrong count: {{wrongAmmo}}</p>
   </div>
   <div>
-    <p>Time so far: {{timmer.currentTime | date:'m:s'}}</p>
+    <p class="mat-subheading-2">Time so far: {{timmer.currentTime | date:'m:s'}}</p>
   </div>
 </div>
 
