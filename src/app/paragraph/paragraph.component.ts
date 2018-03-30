@@ -33,7 +33,6 @@ export class ParagraphComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.data.body = this._prepareText(this.data.body);
     this.characters = this._textToCharacters(this.data.body);
     this._bindEvents();
     this._configureDialog(this.dialogRef);
@@ -82,19 +81,6 @@ export class ParagraphComponent implements OnInit {
         this._hotkeysService.add(new Hotkey(character, () => this.onKeyPress(character)));
       }
     }
-  }
-
-  private _prepareText(text: string) {
-    return text.split('')
-    .map(character => {
-      if (character === '\n') {
-        return '↵';
-      } else if (character === ' ') {
-        return '␣';
-      } else {
-        return character;
-      }
-    }).join('');
   }
 
   private _textToCharacters(text: string) {
