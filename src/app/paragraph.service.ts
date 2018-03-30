@@ -10,14 +10,7 @@ export class ParagraphService {
       {
         title: 'text 1',
         body:
-          `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Aliquam malesuada metus pellentesque pulvinar vestibulum.
-           Pellentesque semper elit ut ante porttitor, sed volutpat nisi convallis.
-            Integer eget felis sed neque posuere dictum. Etiam convallis tortor quam, cursus ullamcorper dolor suscipit vitae.
-             Phasellus condimentum est eget nibh aliquam porta. Donec sagittis magna sed egestas convallis.
-              In rutrum dapibus consectetur. Donec aliquet volutpat consectetur.
-               Donec eget arcu maximus, condimentum arcu id, tristique velit.
-               Cras ut finibus orci, vel gravida ex. Cras et ante pharetra, ornare risus nec, semper risus.`
+          `Lorem`
       },
       {
         title: 'text 2',

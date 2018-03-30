@@ -1,3 +1,5 @@
-<ul>
-  <li *ngFor="let paragraph of paragraphs; let i = index" (click)="openDialog(i)">{{paragraph.title}}</li>
-</ul>
+<mat-list role="list">
+  <mat-list-item role="listitem" *ngFor="let paragraph of paragraphs; let i = index" (click)="openDialog(i)" class="list-item">
+    {{paragraph.title}}
+  </mat-list-item>
+</mat-list>
