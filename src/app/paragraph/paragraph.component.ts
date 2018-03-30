@@ -33,8 +33,8 @@ export class ParagraphComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const preparedText = this._prepareText(this.data.body);
-    this.characters = this._textToCharacters(preparedText);
+    this.data.body = this._prepareText(this.data.body);
+    this.characters = this._textToCharacters(this.data.body);
     this._bindEvents();
     this._configureDialog(this.dialogRef);
   }
