@@ -41,12 +41,16 @@ export class ParagraphModal {
       data: this._paragraph
     });
     this._dialogInstance.disableClose = true;
+    this._dialogInstance.backdropClick().subscribe(() => {
+      if (this._askWantToExit() === true) {
+        this.close();
+      }
+    });
 
     this._dialogInstance.keydownEvents().subscribe((e: KeyboardEvent) => {
       if (e.keyCode === this.EXIT_KEY_CODE) {
-        const sure = confirm('Do you want to exit?');
-        if (sure === true) {
-          this._dialogInstance.close();
+        if (this._askWantToExit() === true) {
+          this.close();
         }
       }
     });
@@ -54,5 +58,9 @@ export class ParagraphModal {
 
   close() {
     this._dialogInstance.close();
+  }
+
+  private _askWantToExit() {
+    return confirm('Do you want to exit?');
   }
 }
