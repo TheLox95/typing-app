@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Paragraph } from '../paragraph';
 import { ParagraphService } from '../paragraph.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ParagraphModal } from './paragraph-modal';
 
 @Component({
   selector: 'app-paragraph-list',
@@ -19,11 +20,8 @@ export class ParagraphListComponent implements OnInit {
   }
 
   openDialog(index: number): void {
-    const dialogRef = this.dialog.open(ParagraphComponent, {
-      width: '700px',
-      height: '600px',
-      data: this.paragraphs[index]
-    });
+    const modal = ParagraphModal.fromMatDialog(this.dialog, this.paragraphs[index]);
+    modal.open();
   }
 
 }

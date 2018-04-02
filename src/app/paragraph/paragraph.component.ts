@@ -5,6 +5,7 @@ import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { Character } from '../character';
 import { Timmer } from './timmer';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ParagraphModal } from '../paragraph-list/paragraph-modal';
 
 @Component({
   selector: 'app-paragraph',
@@ -24,8 +25,8 @@ export class ParagraphComponent implements OnInit {
   wrongAmmo = 0;
   timeIsRunning = false;
   isFinished = false;
-  private readonly EXIT_KEY_CODE = 27;
   private characterAmmoToBeTyped = 0;
+  private _dialog: ParagraphModal;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Paragraph,
@@ -36,11 +37,11 @@ export class ParagraphComponent implements OnInit {
   ngOnInit() {
     this.characters = this._textToCharacters(this.data.body);
     this._bindEvents();
-    this._configureDialog(this.dialogRef);
+    this._dialog = ParagraphModal.fromDialogref(this.dialogRef);
   }
 
   exit() {
-    this.dialogRef.close();
+    this._dialog.close();
   }
 
   private onKeyPress = (character: string): boolean => {
@@ -87,18 +88,6 @@ export class ParagraphComponent implements OnInit {
   private _textToCharacters(text: string) {
     return text.split('').map<Character>(character => {
       return {body: character, typed: 'NOT'};
-    });
-  }
-
-  private _configureDialog(dialog: MatDialogRef<ParagraphComponent>) {
-    dialog.disableClose = true;
-    dialog.keydownEvents().subscribe((e: KeyboardEvent) => {
-      if (e.keyCode === this.EXIT_KEY_CODE) {
-        const sure = confirm('Do you waNT TO EXIT?');
-        if (sure === true) {
-          dialog.close();
-        }
-      }
     });
   }
 
