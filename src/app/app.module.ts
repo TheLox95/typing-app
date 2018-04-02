@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { ParagraphListComponent } from './paragraph-list/paragraph-list.component';
 import { ParagraphComponent } from './paragraph/paragraph.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatStepperModule, MatListModule } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatStepperModule, MatListModule, MatToolbarModule } from '@angular/material';
 
 
 @NgModule({
@@ -23,6 +23,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatStepperModule, MatListModule } from '@an
     MatDialogModule,
     MatStepperModule,
     MatListModule,
+    MatToolbarModule,
     BrowserAnimationsModule,
     HotkeyModule.forRoot()
   ],
