@@ -36,7 +36,7 @@ export class ParagraphModal {
 
   open() {
     this._dialogInstance = this._dialog.open(ParagraphComponent, {
-      width: '700px',
+      width: '1100px',
       height: '600px',
       data: this._paragraph
     });
