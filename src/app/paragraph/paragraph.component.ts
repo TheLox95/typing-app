@@ -24,6 +24,7 @@ export class ParagraphComponent implements OnInit {
   wrongAmmo = 0;
   timeIsRunning = false;
   isFinished = false;
+  private readonly EXIT_KEY_CODE = 27;
   private characterAmmoToBeTyped = 0;
 
   constructor(
@@ -92,7 +93,7 @@ export class ParagraphComponent implements OnInit {
   private _configureDialog(dialog: MatDialogRef<ParagraphComponent>) {
     dialog.disableClose = true;
     dialog.keydownEvents().subscribe((e: KeyboardEvent) => {
-      if (e.keyCode === 27) {
+      if (e.keyCode === this.EXIT_KEY_CODE) {
         const sure = confirm('Do you waNT TO EXIT?');
         if (sure === true) {
           dialog.close();
